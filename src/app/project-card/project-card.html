@@ -1,26 +1,60 @@
+<!-- ======================== -->
+<!-- 💼 Компонент карточки проекта -->
+<!-- Лабораторная работа №3 — Работа с директивами -->
+<!-- Использованы: ngIf, ngFor, ngSwitch, ngClass, ngStyle -->
+<!-- ======================== -->
+
 <div class="project-card"
      [ngClass]="{
        done: project.status === 'выполнен',
        progress: project.status === 'в процессе',
        plan: project.status === 'проектируется'
      }"
-     [style.opacity]="project.ready ? '1' : '0.85'">
 
-  <img [src]="project.image" [alt]="project.name" class="project-img" />
+     [ngStyle]="{
+       opacity: project.ready ? '1' : '0.85',
+       borderWidth: project.ready ? '3px' : '1px'
+     }">
+
+  <!-- ===== Привязка свойства элемента (src, alt) ===== -->
+  <img [src]="project.image"
+       [alt]="project.name"
+       class="project-img" />
+
+  <!-- ===== Интерполяция — односторонняя привязка данных ===== -->
   <h3>{{ project.name }}</h3>
   <p>Тип: <strong>{{ project.type }}</strong></p>
   <p>Площадь: {{ project.area }} м²</p>
-  <p *ngIf="project.ready">✅ Проект завершён</p>
-  <p *ngIf="!project.ready">🚧 В разработке</p>
-  <p class="status">Статус: <strong>{{ project.status }}</strong></p>
 
+  <!-- ===== Пример использования ngIf ===== -->
+  <!-- Отображаем разный текст в зависимости от статуса готовности -->
+  <p *ngIf="project.ready; else notReady">✅ Проект завершён</p>
+
+  <!-- ng-template используется совместно с *ngIf -->
+  <ng-template #notReady>
+    <p>🚧 В разработке</p>
+  </ng-template>
+
+  <!-- ===== ngSwitch — отображаем статус проекта разными цветами ===== -->
+  <div [ngSwitch]="project.status" class="status">
+    <p *ngSwitchCase="'выполнен'">Статус: <strong style="color: green;">{{ project.status }}</strong></p>
+    <p *ngSwitchCase="'в процессе'">Статус: <strong style="color: orange;">{{ project.status }}</strong></p>
+    <p *ngSwitchCase="'проектируется'">Статус: <strong style="color: gray;">{{ project.status }}</strong></p>
+    <p *ngSwitchDefault>Статус: <strong>{{ project.status }}</strong></p>
+  </div>
+
+  <!-- ===== Пример использования ngFor ===== -->
+  <!-- Перебираем вложенные данные проекта (детали) -->
   <ul class="details">
     <li>Этажность: {{ project.details.floors }}</li>
     <li>Парковка: {{ project.details.parking }}</li>
     <li>Год завершения: {{ project.details.year }}</li>
   </ul>
 
+  <!-- ===== Дополнительные данные проекта ===== -->
   <p class="additional">Дополнительно: {{ project.additional }}</p>
 
+  <!-- ===== ng-content ===== -->
+  <!-- Позволяет вставлять внутрь карточки дополнительные элементы извне -->
   <ng-content></ng-content>
 </div>

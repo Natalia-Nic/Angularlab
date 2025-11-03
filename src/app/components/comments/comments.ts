@@ -1,3 +1,8 @@
+// ==========================
+// ЛАБОРАТОРНАЯ РАБОТА №2
+// Работа с компонентами и привязками
+// ==========================
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,13 +15,16 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./comments.scss']
 })
 export class Comments {
-  username = 'Гость';
-  commentText = '';
-  comments: { user: string; text: string; time: string }[] = [];
+  // --- Односторонняя привязка (интерполяция и привязка к DOM-значению)
+  username = 'Гость'; // имя пользователя, отображается в интерфейсе
+  commentText = ''; // текст текущего комментария
+  comments: { user: string; text: string; time: string }[] = []; // массив всех комментариев
 
+  // --- Односторонняя привязка метода компонента к событию DOM (click)
   addComment() {
-    if (!this.commentText.trim()) return;
+    if (!this.commentText.trim()) return; // проверка на пустой ввод
 
+    // Добавляем новый комментарий в массив (односторонняя привязка данных)
     this.comments.push({
       user: this.username,
       text: this.commentText,
@@ -29,9 +37,11 @@ export class Comments {
       })
     });
 
+    // --- Двусторонняя привязка ([(ngModel)]) автоматически очистит textarea при сбросе
     this.commentText = '';
   }
 
+  // --- Пример вычисляемого свойства, используемого в привязке к атрибуту и классу
   get inputIsEmpty() {
     return this.commentText.trim().length === 0;
   }

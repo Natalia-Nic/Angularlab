@@ -1,8 +1,12 @@
-<div class="comments-container">
+<div class="comments-container"> 
   <h2>💬 Чат комментариев</h2>
 
+  <!-- ===== 1. Привязка к DOM-элементу и атрибуту ===== -->
   <div class="form-group">
     <label>Имя:</label>
+
+    <!-- [(ngModel)] — двусторонняя привязка (данные обновляются и из компонента, и из DOM) -->
+    <!-- [attr.title] — привязка к атрибуту HTML -->
     <input
       type="text"
       [(ngModel)]="username"
@@ -11,6 +15,7 @@
     />
   </div>
 
+  <!-- ===== 2. Двусторонняя привязка текста комментария ===== -->
   <div class="form-group">
     <label>Комментарий:</label>
     <textarea
@@ -20,6 +25,10 @@
     ></textarea>
   </div>
 
+  <!-- ===== 3. Привязка события DOM к методу компонента ===== -->
+  <!-- (click)="addComment()" — односторонняя привязка: событие вызывает метод в компоненте -->
+  <!-- [disabled] — привязка свойства элемента -->
+  <!-- [class.btn-disabled] — привязка к CSS-классу -->
   <button
     (click)="addComment()"
     [disabled]="inputIsEmpty"
@@ -28,24 +37,33 @@
     Отправить
   </button>
 
+  <!-- ===== 4. Использование директивы *ngIf ===== -->
+  <!-- Показываем список комментариев, если они есть -->
   <div class="comments-list" *ngIf="comments.length > 0; else noComments">
     <h3>Комментарии:</h3>
 
+    <!-- ===== 5. Использование директивы *ngFor ===== -->
+    <!-- Перебор массива комментариев -->
+    <!-- [class.new-comment] — динамическое добавление класса -->
+    <!-- [style.borderColor] — привязка к стилю -->
     <div
       *ngFor="let c of comments; let i = index"
       class="comment"
       [class.new-comment]="i === comments.length - 1"
       [style.borderColor]="c.user === 'Админ' ? 'red' : '#007bff'"
     >
+      <!-- ===== 6. Интерполяция (односторонняя привязка данных) ===== -->
       <strong>{{ c.user }}</strong>
       <span class="time">{{ c.time }}</span>
       <p>{{ c.text }}</p>
     </div>
   </div>
 
+  <!-- ===== 7. Альтернатива через ng-template + *ngIf ===== -->
   <ng-template #noComments>
     <p class="no-comments">Пока нет комментариев 😔</p>
   </ng-template>
 
+  <!-- ===== 8. Односторонняя привязка к DOM через интерполяцию ===== -->
   <p class="preview">👤 Текущее имя: {{ username }}</p>
 </div>

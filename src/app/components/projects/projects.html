@@ -1,21 +1,69 @@
-<div class="projects-container">
-  <h2>{{ title }}</h2>
+<!--
+  Это шаблон для компонента "Projects".
+  Здесь отображаются строительные проекты, фильтр и отладочная информация.
+-->
 
+<div class="projects-container">
+  <!-- Заголовок страницы: подставляется из переменной title -->
+  <h2>{{ title }}</h2>
+  <!-- {{ title }} — односторонняя привязка данных.
+       Angular подставит значение переменной title из класса Projects. -->
+
+  <!-- ================================================================== -->
+  <!-- 🔹 Компонент фильтра проектов -->
+  <!-- ================================================================== -->
+
+  <!-- 
+    Передаём данные из родителя (Projects) в дочерний компонент (ProjectsFilterComponent)
+    через входное свойство [selectedType].
+    А когда в фильтре пользователь меняет тип, событие (selectedTypeChange)
+    вызывает метод onSelectedTypeChange() в родителе.
+  -->
   <app-projects-filter
     [selectedType]="selectedType"
     (selectedTypeChange)="onSelectedTypeChange($event)">
   </app-projects-filter>
 
+  <!-- ================================================================== -->
+  <!-- 🔹 Список карточек проектов -->
+  <!-- ================================================================== -->
+
   <div class="project-list">
+    <!-- 
+      Встраиваем компонент списка проектов (ProjectListComponent).
+      #projectList — это локальная ссылка на компонент, чтобы потом
+      получить его в TypeScript через @ViewChild('projectList').
+      [projects]="filteredProjects" — передаём отфильтрованный список.
+    -->
     <app-project-list #projectList [projects]="filteredProjects"></app-project-list>
   </div>
 
-@if (projectListComponent) {
-  <app-projects-debug>
-    <div #debugContent>
-      <p>Всего проектов: {{ projectListComponent.projects.length || 0 }}</p>
-      <p>Отфильтрованных проектов: {{ filteredProjects.length }}</p>
-    </div>
-  </app-projects-debug>
+  <!-- ================================================================== -->
+  <!-- 🔹 Блок отладки (debug) -->
+  <!-- ================================================================== -->
+
+  <!-- 
+    @if — структурная директива Angular 17+ (аналог *ngIf)
+    Проверяет, существует ли компонент projectListComponent.
+    Если существует — отобразит вложенный блок.
+  -->
+  @if (projectListComponent) {
+    <!-- Компонент ProjectsDebugComponent — для вывода технической информации -->
+    <app-projects-debug>
+      <!-- Внутри передаём кусочек шаблона через #debugContent -->
+      <div #debugContent>
+        <!-- 
+          {{ projectListComponent.projects.length }} — получаем длину массива проектов
+          через ViewChild, привязанный к #projectList вверху.
+          Если компонент не загрузился — подставляем 0.
+        -->
+        <p>Всего проектов: {{ projectListComponent.projects.length || 0 }}</p>
+
+        <!-- 
+          filteredProjects — геттер, который фильтрует список в зависимости от selectedType.
+        -->
+        <p>Отфильтрованных проектов: {{ filteredProjects.length }}</p>
+      </div>
+    </app-projects-debug>
   }
 </div>

@@ -1,3 +1,8 @@
+// ==========================
+// ЛАБОРАТОРНАЯ РАБОТА №3
+// Работа с директивами (ngIf, ngFor, ngSwitch, ngClass, ngStyle)
+// ==========================
+
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -9,5 +14,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./project-card.scss']
 })
 export class ProjectCard {
-  @Input() project: any; // сюда будет передаваться проект
+  // --- Передача данных через @Input (универсальный компонент)
+  @Input() project: any;
 }
