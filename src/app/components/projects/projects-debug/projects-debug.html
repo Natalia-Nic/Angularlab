@@ -1,3 +1,14 @@
-<div class="debug-info">
+<!-- =============================== -->
+<!-- 💡 ProjectsDebugComponent -->
+<!-- Демонстрирует работу ng-content + ContentChild -->
+<!-- =============================== -->
+
+<div class="debug-panel">
+  <h3>🧩 Отладочная информация</h3>
+
+  <!-- Здесь Angular вставит контент из родителя (projects.html) -->
   <ng-content></ng-content>
+
+  <hr>
+  <p class="hint">⚙️ Контент получен через @ContentChild</p>
 </div>
