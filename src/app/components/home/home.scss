@@ -1,0 +1,25 @@
+h1 {
+  text-align: center;
+  color: #0056b3;
+}
+
+.menu {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.menu a {
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  color: white;
+  background: #0056b3;
+  transition: 0.3s;
+}
+
+.menu a:hover,
+.menu a.active {
+  background: #003d80;
+}

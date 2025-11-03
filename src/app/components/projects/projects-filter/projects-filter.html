@@ -1,0 +1,13 @@
+<!-- фильтр -->
+<label>Фильтр по типу проекта:</label>
+<select [(ngModel)]="selectedType" (ngModelChange)="onTypeChange()">
+  <option value="все">Все</option>
+  <option value="жилой">Жилые</option>
+  <option value="коммерческий">Коммерческие</option>
+</select>
+
+<div [ngSwitch]="selectedType">
+  <p *ngSwitchCase="'все'">Показаны все проекты компании</p>
+  <p *ngSwitchCase="'жилой'">Показаны только жилые проекты</p>
+  <p *ngSwitchCase="'коммерческий'">Показаны только коммерческие проекты</p>
+</div>

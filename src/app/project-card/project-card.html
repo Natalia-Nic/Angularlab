@@ -1,0 +1,26 @@
+<div class="project-card"
+     [ngClass]="{
+       done: project.status === 'выполнен',
+       progress: project.status === 'в процессе',
+       plan: project.status === 'проектируется'
+     }"
+     [style.opacity]="project.ready ? '1' : '0.85'">
+
+  <img [src]="project.image" [alt]="project.name" class="project-img" />
+  <h3>{{ project.name }}</h3>
+  <p>Тип: <strong>{{ project.type }}</strong></p>
+  <p>Площадь: {{ project.area }} м²</p>
+  <p *ngIf="project.ready">✅ Проект завершён</p>
+  <p *ngIf="!project.ready">🚧 В разработке</p>
+  <p class="status">Статус: <strong>{{ project.status }}</strong></p>
+
+  <ul class="details">
+    <li>Этажность: {{ project.details.floors }}</li>
+    <li>Парковка: {{ project.details.parking }}</li>
+    <li>Год завершения: {{ project.details.year }}</li>
+  </ul>
+
+  <p class="additional">Дополнительно: {{ project.additional }}</p>
+
+  <ng-content></ng-content>
+</div>

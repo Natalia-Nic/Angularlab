@@ -1,0 +1,21 @@
+<div class="projects-container">
+  <h2>{{ title }}</h2>
+
+  <app-projects-filter
+    [selectedType]="selectedType"
+    (selectedTypeChange)="onSelectedTypeChange($event)">
+  </app-projects-filter>
+
+  <div class="project-list">
+    <app-project-list #projectList [projects]="filteredProjects"></app-project-list>
+  </div>
+
+@if (projectListComponent) {
+  <app-projects-debug>
+    <div #debugContent>
+      <p>Всего проектов: {{ projectListComponent.projects.length || 0 }}</p>
+      <p>Отфильтрованных проектов: {{ filteredProjects.length }}</p>
+    </div>
+  </app-projects-debug>
+  }
+</div>

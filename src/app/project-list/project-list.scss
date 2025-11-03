@@ -1,0 +1,17 @@
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  @media (max-width: 480px) {
+    gap: 1rem;
+    padding: 0.5rem 0;
+  }
+}

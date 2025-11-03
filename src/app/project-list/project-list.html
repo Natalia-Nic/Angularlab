@@ -1,0 +1,7 @@
+<div class="project-list">
+  <ng-container *ngFor="let p of projects; let i = index">
+    <app-project-card [project]="p" #projectCard>
+      <p class="extra-content">Дополнительно: {{ p.additional }}</p>
+    </app-project-card>
+  </ng-container>
+</div>
