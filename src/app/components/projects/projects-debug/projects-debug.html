@@ -1,14 +1,57 @@
-<!-- =============================== -->
-<!-- 💡 ProjectsDebugComponent -->
-<!-- Демонстрирует работу ng-content + ContentChild -->
-<!-- =============================== -->
+<!-- Компонент Projects -->
+<!-- Лабораторная работа №5 — жизненный цикл компонента -->
 
-<div class="debug-panel">
-  <h3>🧩 Отладочная информация</h3>
+<div class="projects-container">
 
-  <!-- Здесь Angular вставит контент из родителя (projects.html) -->
-  <ng-content></ng-content>
+  <!-- Заголовок страницы. Значение подставляется из переменной title -->
+  <h2>{{ title }}</h2>
 
-  <hr>
-  <p class="hint">⚙️ Контент получен через @ContentChild</p>
+  <!-- Компонент фильтра проектов.
+       Передаём в него выбранный тип через [selectedType].
+       Когда тип меняется, вызывается метод onSelectedTypeChange(). -->
+  <app-projects-filter
+    [selectedType]="selectedType"
+    (selectedTypeChange)="onSelectedTypeChange($event)">
+  </app-projects-filter>
+
+  <!-- Блок, где отображается список проектов -->
+  <div class="project-list">
+
+    <!-- 
+      Здесь используется компонент ProjectListComponent.
+      Атрибут #projectList создаёт шаблонную переменную, 
+      чтобы можно было обратиться к этому компоненту из TypeScript 
+      с помощью декоратора @ViewChild('projectList').
+      В свойство [projects] передаём отфильтрованный список проектов.
+    -->
+    <app-project-list
+      #projectList
+      [projects]="filteredProjects">
+    </app-project-list>
+
+  </div>
+
+  <!-- Компонент для демонстрации работы жизненного цикла -->
+  @if (projectListComponent) {
+
+    <!-- 
+      Здесь используется компонент ProjectsDebugComponent.
+      Он вставляет контент, переданный между его тегами, 
+      в место, где в нём прописан ng-content.
+    -->
+    <app-projects-debug>
+
+      <!-- 
+        В этот блок добавляется отладочная информация.
+        Атрибут #debugContent позволяет получить ссылку на элемент 
+        через @ContentChild в ProjectsDebugComponent.
+      -->
+      <div #debugContent>
+        <p>Всего проектов: {{ projectListComponent.projects.length || 0 }}</p>
+        <p>Отфильтрованных проектов: {{ filteredProjects.length }}</p>
+      </div>
+
+    </app-projects-debug>
+  }
+
 </div>
